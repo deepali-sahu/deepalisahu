@@ -1,0 +1,11 @@
+---
+- hosts: webservers
+  tasks:
+  - name: copy file
+    copy:
+      src: /home/ansible/test
+      dest: /home/ansible/test1
+  - name: get_url
+    get_url:
+      url: http://ftp-nyc.osuosl.org/pub/jenkins/war-stable/2.121.2/jenkins.war
+      dest: /home/ansible/jenkins.war
