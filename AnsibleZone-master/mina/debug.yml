@@ -1,9 +1,26 @@
 ---
 - hosts: dbserver
+  vars_prompt:
+  - name: :"some_password"
+    prompt: "Enter password"
+    private: yes
   tasks:
   - name: execute any basic linux command
     command: hostname -f
     register: cmd_content
+  - name: debug statemane for os info
+    debug:
+      msg: "os family is {{ ansible_os_family }}" so it will not work on other os"
+  - name: print command result
+    debug:
+      msg: "{{ cmd_content.stdout}}"
+    when: cmd_content.stderr == ""
+  - name: print command error if present
+    debug:
+      msg: "{{ cmd_content.stderr}}"
+    when: cmd_content.stderr != ""
   - name: print variable content
     debug:
       msg: "{{ cmd_content }}"
+  - debug:
+      msg: "system {{ invebtory_hostname }} has uuid {{ ansible_product_uuid }}"
